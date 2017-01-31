@@ -3,10 +3,7 @@ package ee.ttu.spring.rest.api;
 import ee.ttu.spring.rest.domain.Book;
 import ee.ttu.spring.rest.engine.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,5 +22,10 @@ public class BookController {
     @RequestMapping(value="get-all", method=RequestMethod.GET)
     public List<Book> getAllBooks() {
         return bookService.getAllBooks();
+    }
+
+    @RequestMapping(value="new", method=RequestMethod.POST)
+    public void createNewBook(@RequestBody Book newBook) {
+        bookService.saveNewBook(newBook);
     }
 }
