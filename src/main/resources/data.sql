@@ -1,0 +1,1 @@
+INSERT INTO book VALUES (1, 'Bob Roberts', 'Greatest Book', 'Mystery', 273);
