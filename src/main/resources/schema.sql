@@ -1,15 +1,15 @@
 CREATE TABLE book
 (
-  id NUMBER(10, 0) PRIMARY KEY,
+  id BIGINT PRIMARY KEY,
   book_title VARCHAR2(250),
   genre VARCHAR2(250),
-  page_count NUMBER(4, 0)
+  page_count INTEGER
 );
 
 CREATE TABLE authors
 (
-  id NUMBER(10, 0) PRIMARY KEY,
-  names VARCHAR2(250),
-  book_id NUMBER(10, 0),
+  id BIGINT PRIMARY KEY,
+  authors_names VARCHAR2(250),
+  book_id BIGINT,
   FOREIGN KEY (book_id) REFERENCES book(id)
 );
