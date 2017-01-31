@@ -3,23 +3,21 @@ package ee.ttu.spring.rest.domain;
 import javax.persistence.*;
 import java.util.List;
 
-@Entity(name="book")
+@Entity
 public class Book {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
 
-    @Column
+    @ElementCollection
+    @CollectionTable(name="authors", joinColumns=@JoinColumn(name="book_id"))
     private List<String> authorsNames;
 
-    @Column
     private String bookTitle;
 
-    @Column
     private String genre;
 
-    @Column
     private int pageCount;
 
     public Long getId() {
