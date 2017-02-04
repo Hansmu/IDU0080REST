@@ -1,2 +1,5 @@
 rootProject.name = 'spring.rest'
+include 'spring.middle.piece'
+include 'main-app'
+include 'transmitter-app'
 
