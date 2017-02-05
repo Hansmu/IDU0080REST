@@ -24,8 +24,29 @@ public class BookController {
         return bookService.getAllBooks();
     }
 
-    @RequestMapping(value="new", method=RequestMethod.POST)
+    @RequestMapping(value="get-ext-all", method=RequestMethod.GET)
+    public List<Book> getAllBooksFromTransmitterApplication() {
+        return bookService.getAllBooksFromTransmitterApplication();
+    }
+
+    @RequestMapping(value="new", method=RequestMethod.PUT)
     public void createNewBook(@RequestBody Book newBook) {
-        bookService.saveNewBook(newBook);
+        bookService.saveBook(newBook);
+    }
+
+    @RequestMapping(value="edit", method=RequestMethod.POST)
+    public void editBook(@RequestBody Book bookToEdit) {
+        bookService.saveBook(bookToEdit);
+    }
+
+    @RequestMapping(value="{bookId}", method=RequestMethod.DELETE)
+    public void removeBook(@RequestBody Book bookToRemove) {
+        bookService.removeBook(bookToRemove);
+    }
+
+    @RequestMapping(value="findBy/{searchParameter}/{parameterValue}", method=RequestMethod.GET)
+    public List<Book> findBooksByFieldValue(@PathVariable(value="searchParameter") String searchParameter,
+                                            @PathVariable(value="parameterValue") String parameterValue) {
+        return bookService.findByParameter(searchParameter, parameterValue);
     }
 }
