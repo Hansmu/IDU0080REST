@@ -7,8 +7,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BookService {
@@ -40,13 +42,42 @@ public class BookService {
         bookRepository.delete(bookToRemove);
     }
 
-    public List<Book> findByParameter(String searchParameter, String parameterValue) {
-        if (searchParameter.equals("genre")) {
-            return bookRepository.findByGenre(parameterValue);
-        } else if (searchParameter.equals("authorsNames")){
-            return bookRepository.findByAuthorsNames(parameterValue);
-        } else {
-            return bookRepository.findByBookTitle(parameterValue);
+    public List<Book> findByParameter(String authorName, String genre, String title) {
+        if (isParameterProvided(authorName)) {
+            return getBooksByAuthorNameGenreAndTitle(authorName, genre, title);
+        } else if (isParameterProvided(genre)) {
+            return getBooksByGenreAndTitle(genre, title);
+        } else if (isParameterProvided(title)) {
+            return bookRepository.findByBookTitle(title);
         }
-}
+
+        return bookRepository.findAll();
+    }
+
+    private boolean isParameterProvided(String parameter) {
+        return parameter != null && !parameter.isEmpty();
+    }
+
+    private boolean isSearchParameterInSearchField(String searchValue, String fieldToBeSearched) {
+        boolean isTrueToNotFilterOutValuesWhenParameterNull = true;
+
+        if (isParameterProvided(searchValue)) {
+            return fieldToBeSearched.toLowerCase().contains(searchValue.toLowerCase());
+        }
+
+        return isTrueToNotFilterOutValuesWhenParameterNull;
+    }
+
+    private List<Book> getBooksByAuthorNameGenreAndTitle(String authorName, String genre, String title) {
+        return bookRepository.findByAuthorsNames(authorName).stream()
+                .filter(book -> isSearchParameterInSearchField(genre, book.getGenre()))
+                .filter(book -> isSearchParameterInSearchField(title, book.getBookTitle()))
+                .collect(Collectors.toList());
+    }
+
+    private List<Book> getBooksByGenreAndTitle(String genre, String title) {
+        return bookRepository.findByGenre(genre).stream()
+                .filter(book -> isSearchParameterInSearchField(title, book.getBookTitle()))
+                .collect(Collectors.toList());
+    }
 }
