@@ -32,6 +32,8 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
     compile("org.springframework:spring-jdbc")
     compile("com.h2database:h2")
+    compileOnly "org.projectlombok:lombok:1.16.12"
+    compile ('com.xebia:jackson-lombok:1.1')
 
     testCompile("junit:junit")
 }
