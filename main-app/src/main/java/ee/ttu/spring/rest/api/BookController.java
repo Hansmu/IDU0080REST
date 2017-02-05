@@ -44,9 +44,10 @@ public class BookController {
         bookService.removeBook(bookToRemove);
     }
 
-    @RequestMapping(value="findBy/{searchParameter}/{parameterValue}", method=RequestMethod.GET)
-    public List<Book> findBooksByFieldValue(@PathVariable(value="searchParameter") String searchParameter,
-                                            @PathVariable(value="parameterValue") String parameterValue) {
-        return bookService.findByParameter(searchParameter, parameterValue);
+    @RequestMapping(value="findBy", method=RequestMethod.GET)
+    public List<Book> findBooksByFieldValue(@RequestParam(value="authorName", required=false) String authorName,
+                                            @RequestParam(value="genre", required=false) String genre,
+                                            @RequestParam(value="title", required=false) String title) {
+        return bookService.findByParameter(authorName, genre, title);
     }
 }
