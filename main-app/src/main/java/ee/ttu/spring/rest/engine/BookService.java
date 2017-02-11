@@ -38,8 +38,8 @@ public class BookService {
         return externalBooks;
     }
 
-    public void removeBook(Book bookToRemove) {
-        bookRepository.delete(bookToRemove);
+    public void removeBook(long bookId) {
+        bookRepository.delete(bookId);
     }
 
     public List<Book> findByParameter(String authorName, String genre, String title) {
