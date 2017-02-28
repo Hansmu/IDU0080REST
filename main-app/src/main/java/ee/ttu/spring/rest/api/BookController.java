@@ -9,6 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value="book")
+@CrossOrigin
 public class BookController {
 
     @Autowired
@@ -40,8 +41,8 @@ public class BookController {
     }
 
     @RequestMapping(value="{bookId}", method=RequestMethod.DELETE)
-    public void removeBook(@RequestBody Book bookToRemove) {
-        bookService.removeBook(bookToRemove);
+    public void removeBook(@PathVariable(value="bookId")Long bookId) {
+        bookService.removeBook(bookId);
     }
 
     @RequestMapping(value="findBy", method=RequestMethod.GET)
