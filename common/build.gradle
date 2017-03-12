@@ -29,6 +29,7 @@ targetCompatibility = 1.8
 
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-data-jpa")
+    compile("org.springframework.boot:spring-boot-starter-web")
     compileOnly "org.projectlombok:lombok:1.16.12"
     compile ('com.xebia:jackson-lombok:1.1')
 
