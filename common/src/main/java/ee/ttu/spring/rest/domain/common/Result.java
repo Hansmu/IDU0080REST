@@ -8,6 +8,8 @@ public class Result<T> {
     private boolean ok;
     private T data;
 
+    public Result() {}
+
     private Result(boolean ok, T data) {
         this.ok = ok;
         this.data = data;

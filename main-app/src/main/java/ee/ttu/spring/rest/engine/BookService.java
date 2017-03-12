@@ -1,14 +1,14 @@
 package ee.ttu.spring.rest.engine;
 
+import ee.ttu.spring.rest.domain.common.Result;
 import ee.ttu.spring.rest.domain.entity.Book;
 import ee.ttu.spring.rest.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,8 +32,8 @@ public class BookService {
 
     public List<Book> getAllBooksFromTransmitterApplication() {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Book[]> responseEntity = restTemplate.getForEntity("http://localhost:9500/book-ext/get-all", Book[].class);
-        List<Book> externalBooks = Arrays.asList(responseEntity.getBody());
+        Result<List<Book>> responseEntity = restTemplate.exchange("http://localhost:9500/book-ext/get-all", HttpMethod.GET, null, new ParameterizedTypeReference<Result<List<Book>>>() {}).getBody();
+        List<Book> externalBooks = responseEntity.getData();
 
         return externalBooks;
     }
