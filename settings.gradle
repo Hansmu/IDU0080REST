@@ -3,4 +3,5 @@ include 'spring.middle.piece'
 include 'main-app'
 include 'transmitter-app'
 include 'consumer-app'
+include 'common'
 

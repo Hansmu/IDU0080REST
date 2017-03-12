@@ -1,6 +1,6 @@
 package ee.ttu.spring.rest.engine;
 
-import ee.ttu.spring.rest.domain.Book;
+import ee.ttu.spring.rest.domain.entity.Book;
 import ee.ttu.spring.rest.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

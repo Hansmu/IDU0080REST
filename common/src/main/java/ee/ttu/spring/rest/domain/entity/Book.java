@@ -1,4 +1,4 @@
-package ee.ttu.spring.rest.domain;
+package ee.ttu.spring.rest.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;

@@ -1,6 +1,6 @@
 package ee.ttu.spring.rest.api;
 
-import ee.ttu.spring.rest.domain.Book;
+import ee.ttu.spring.rest.domain.entity.Book;
 import ee.ttu.spring.rest.engine.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
