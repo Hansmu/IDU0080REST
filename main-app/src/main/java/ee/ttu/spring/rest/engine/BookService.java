@@ -2,7 +2,9 @@ package ee.ttu.spring.rest.engine;
 
 import ee.ttu.spring.rest.domain.common.Result;
 import ee.ttu.spring.rest.domain.entity.Book;
+import ee.ttu.spring.rest.exception.exceptions.InvalidDataException;
 import ee.ttu.spring.rest.repository.BookRepository;
+import ee.ttu.spring.rest.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -27,6 +29,7 @@ public class BookService {
     }
 
     public void saveBook(Book book) {
+        Utils.validateBook(book);
         bookRepository.save(book);
     }
 
@@ -39,6 +42,9 @@ public class BookService {
     }
 
     public void removeBook(long bookId) {
+        if (bookId < 0) {
+            throw new InvalidDataException("Book ID cannot be less than 0.");
+        }
         bookRepository.delete(bookId);
     }
 

@@ -1,6 +1,7 @@
 package ee.ttu.spring.rest.exception;
 
 import ee.ttu.spring.rest.domain.common.Result;
+import ee.ttu.spring.rest.exception.exceptions.InvalidDataException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,13 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class ExceptionHandlingAdvice {
 
     @ExceptionHandler(Exception.class)
-    public Result exception() {
+    public Result exception(Exception ex) {
         return Result.nok("Technical error.");
     }
 
-    @ExceptionHandler(NumberFormatException.class)
-    public Result numberException() {
-        return Result.ok("Invalid number format");
+    @ExceptionHandler(InvalidDataException.class)
+    public Result invalidDataException(InvalidDataException e) {
+        return Result.nok(e.getMessage());
     }
 
 }
