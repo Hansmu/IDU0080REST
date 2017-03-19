@@ -21,7 +21,7 @@ public class Book {
 
     private String genre;
 
-    private int pageCount;
+    private Integer pageCount;
 
     @JsonIgnore
     public List<String> getAuthorsNamesAsList() {
