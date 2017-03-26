@@ -19,8 +19,8 @@ public class Utils {
     }
 
     public static void validateBook(Book book) {
-        if (book.getPageCount() == null || book.getPageCount() < 0) {
-            throw new InvalidDataException("Page count cannot be less than 0");
+        if (book.getPageCount() == null || book.getPageCount() < 1) {
+            throw new InvalidDataException("Page count cannot be less than 1");
         }
 
         if (book.getAuthorsNames() == null || book.getAuthorsNames().isEmpty()) {
