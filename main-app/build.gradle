@@ -36,6 +36,8 @@ dependencies {
     compile("com.h2database:h2")
     compileOnly "org.projectlombok:lombok:1.16.12"
     compile ('com.xebia:jackson-lombok:1.1')
+    compile("org.springframework.boot:spring-boot-starter-activemq")
+    compile("org.apache.activemq:activemq-broker")
 
     testCompile("junit:junit")
 }

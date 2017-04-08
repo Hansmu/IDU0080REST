@@ -1,5 +1,6 @@
 package ee.ttu.spring.rest.engine;
 
+import ee.ttu.spring.rest.domain.common.OrderInfo;
 import ee.ttu.spring.rest.domain.common.Result;
 import ee.ttu.spring.rest.domain.entity.Book;
 import ee.ttu.spring.rest.exception.exceptions.InvalidDataException;
@@ -8,6 +9,7 @@ import ee.ttu.spring.rest.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
+import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -19,6 +21,9 @@ public class BookService {
 
     @Autowired
     private BookRepository bookRepository;
+
+    @Autowired
+    private JmsTemplate jmsTemplate;
 
     public Book getBook(Long bookId) {
         return bookRepository.findOne(bookId);
@@ -85,5 +90,13 @@ public class BookService {
         return bookRepository.findByGenre(genre).stream()
                 .filter(book -> isSearchParameterInSearchField(title, book.getBookTitle()))
                 .collect(Collectors.toList());
+    }
+
+    public void orderBooks(List<Book> booksToOrder) {
+        jmsTemplate.convertAndSend(OrderHandler.ORDER_CHECKER, booksToOrder);
+    }
+
+    public OrderInfo getOrderCost() {
+        return (OrderInfo)jmsTemplate.receiveAndConvert(OrderHandler.ORDER_RECEIVER);
     }
 }

@@ -6,6 +6,8 @@ import ee.ttu.spring.rest.engine.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value="book")
 @CrossOrigin
@@ -49,5 +51,16 @@ public class BookController {
                                             @RequestParam(value="genre", required=false) String genre,
                                             @RequestParam(value="title", required=false) String title) {
         return Result.ok(bookService.findByParameter(authorName, genre, title));
+    }
+
+    @RequestMapping(value="order-books", method=RequestMethod.POST)
+    public Result orderBooks(@RequestBody List<Book> booksToOrder) {
+        bookService.orderBooks(booksToOrder);
+        return Result.ok(null);
+    }
+
+    @RequestMapping(value="order-cost", method=RequestMethod.GET)
+    public Result getOrderCost() {
+        return Result.ok(bookService.getOrderCost());
     }
 }
