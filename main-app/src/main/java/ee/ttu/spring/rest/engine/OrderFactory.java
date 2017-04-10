@@ -1,5 +1,6 @@
 package ee.ttu.spring.rest.engine;
 
+import ee.ttu.spring.rest.domain.common.Order;
 import ee.ttu.spring.rest.domain.common.OrderInfo;
 import ee.ttu.spring.rest.domain.entity.Book;
 import org.springframework.jms.annotation.JmsListener;
@@ -17,8 +18,8 @@ public class OrderFactory {
         System.out.println("Order for " + orderInfo.getBooks().size() + " books has been received.");
         Long totalPrice = 0L;
 
-        for (Book book: orderInfo.getBooks()) {
-            totalPrice += book.getBookTitle().length() * 10;
+        for (Order order: orderInfo.getBooks()) {
+            totalPrice += order.getBook().getBookTitle().length() * 10 * order.getAmount();
         }
 
         simulateCalculationWait();

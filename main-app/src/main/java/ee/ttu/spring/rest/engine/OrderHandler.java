@@ -1,5 +1,6 @@
 package ee.ttu.spring.rest.engine;
 
+import ee.ttu.spring.rest.domain.common.Order;
 import ee.ttu.spring.rest.domain.common.OrderInfo;
 import ee.ttu.spring.rest.domain.entity.Book;
 import ee.ttu.spring.rest.exception.exceptions.InvalidDataException;
@@ -20,14 +21,14 @@ public class OrderHandler {
 
     @JmsListener(destination = ORDER_CHECKER)
     @SendTo(OrderFactory.ORDER_MAKER)
-    public OrderInfo validateOrder(List<Book> orderedBooks) {
+    public OrderInfo validateOrder(List<Order> orderedBooks) {
         System.out.println("Order for " + orderedBooks.size() + " books has been received.");
 
         OrderInfo orderInfo = new OrderInfo();
         orderInfo.setBooks(orderedBooks);
 
         try {
-            orderedBooks.forEach(Utils::validateBook);
+            orderedBooks.forEach(order -> Utils.validateBook(order.getBook()));
             orderInfo.setOk(true);
         } catch (InvalidDataException e) {
             orderInfo.setMessage(e.getMessage());

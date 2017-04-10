@@ -9,7 +9,7 @@ public class OrderInfo implements Serializable {
     private boolean isOk;
     private Long totalPrice;
     private String message;
-    private List<Book> books;
+    private List<Order> books;
 
     public boolean isOk() {
         return isOk;
@@ -35,11 +35,11 @@ public class OrderInfo implements Serializable {
         this.message = message;
     }
 
-    public List<Book> getBooks() {
+    public List<Order> getBooks() {
         return books;
     }
 
-    public void setBooks(List<Book> books) {
+    public void setBooks(List<Order> books) {
         this.books = books;
     }
 }

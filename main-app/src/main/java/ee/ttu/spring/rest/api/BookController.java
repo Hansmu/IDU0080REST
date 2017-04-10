@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value="book")
@@ -54,8 +55,8 @@ public class BookController {
     }
 
     @RequestMapping(value="order-books", method=RequestMethod.POST)
-    public Result orderBooks(@RequestBody List<Book> booksToOrder) {
-        bookService.orderBooks(booksToOrder);
+    public Result orderBooks(@RequestBody Map<Long, Integer> orderInfo) {
+        bookService.orderBooks(orderInfo);
         return Result.ok(null);
     }
 

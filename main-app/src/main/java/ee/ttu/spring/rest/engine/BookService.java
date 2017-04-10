@@ -1,5 +1,6 @@
 package ee.ttu.spring.rest.engine;
 
+import ee.ttu.spring.rest.domain.common.Order;
 import ee.ttu.spring.rest.domain.common.OrderInfo;
 import ee.ttu.spring.rest.domain.common.Result;
 import ee.ttu.spring.rest.domain.entity.Book;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -92,8 +94,12 @@ public class BookService {
                 .collect(Collectors.toList());
     }
 
-    public void orderBooks(List<Book> booksToOrder) {
-        jmsTemplate.convertAndSend(OrderHandler.ORDER_CHECKER, booksToOrder);
+    public void orderBooks(Map<Long, Integer> orderInfo) {
+        List<Order> orders = orderInfo.entrySet().stream()
+                .map(entry -> new Order(getBook(entry.getKey()), entry.getValue()))
+                .collect(Collectors.toList());
+
+        jmsTemplate.convertAndSend(OrderHandler.ORDER_CHECKER, orders);
     }
 
     public OrderInfo getOrderCost() {
