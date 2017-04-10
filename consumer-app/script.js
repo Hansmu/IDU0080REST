@@ -4,7 +4,7 @@
 
 function getCost(){
     $('#loadingmessage').show();  // show the loading message.
-    $.when(order()).done(getCost2() );
+    $.when(order()).done(getCost2);
     $('#loadingmessage').hide(); // hide the loading message
 }
 
@@ -18,7 +18,7 @@ function getCost2() {
         },
         error: function (data) {
             var error = "<div class='alert alert-danger'> " +
-                "<strong> data</strong>" +
+                "<strong> data.data</strong>" +
                 " </div>"
             $('#totalCost').html(error)
         }
@@ -164,7 +164,6 @@ function order() {
         type: 'POST',
         contentType: "application/json",
         data: JSON.stringify(cart),
-        success: getCost()
     });
 }
 
