@@ -13,7 +13,7 @@ function getCost2() {
         url: 'http://localhost:9000/book/order-cost/',
         dataType: 'json',
         success: function (data) {
-            data = data.data
+            data = data.data.totalPrice;
             $("#totalCost").html('<div id="TotalCost">' + data + '</div>')
         },
         error: function (data) {
