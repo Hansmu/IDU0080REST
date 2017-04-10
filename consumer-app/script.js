@@ -1,6 +1,24 @@
 /**
  * Created by max on 2/11/17.
  */
+
+function getCost() {
+    $.ajax({
+        url: 'http://localhost:9000/book/order-cost/',
+        dataType: 'json',
+        success: function (data) {
+            data = data.data
+            $("#totalCost").html('<div id="TotalCost">' + data + '</div>')
+        },
+        error: function () {
+            var error = "<div class='alert alert-danger'> " +
+                "<strong> error</strong>" +
+                " </div>"
+            $('#totalCost').html(error)
+        }
+    });
+}
+
 function loadAllBooks() {
     $.ajax({
         url: 'http://localhost:9000/book/get-all',
@@ -10,11 +28,14 @@ function loadAllBooks() {
             $.each(data.data, function (i, book) {
                 var button = "<button onclick='loadBook(" + book.id + ")' type='button' class='btn btn-primary btn-lg'>Show</button>";
                 var deleteButton = "<button onclick='deleteBook(" + book.id + ")' type='button' class='btn btn-primary btn-lg'>Delete</button>";
+                var addToCartButton = "<button onclick='addToCart(" + book.id + ")' type='button' class='btn btn-primary btn-lg'>Add to Cart</button>";
                 books +=
                     "<tr><td>" +
                     book.authorsNames + "</td>" + "<td>" + book.bookTitle + "</td>" +
                     "<td>" + button + "</td>" +
                     "<td>" + deleteButton + "</td>" +
+                    "<td>" + addToCartButton + "</td>" +
+                    "<td row.id='" + book.id + "'>" + getCountFromCart(book.id) + "</td>" +
                     "</tr>"
             });
             books += "</tbody>"
@@ -29,6 +50,21 @@ function loadAllBooks() {
         }
     })
     ;
+}
+
+var cart = {};
+
+function getCountFromCart(id) {
+    if (cart[id] == undefined) return 0;
+    else return cart[id];
+}
+
+function addToCart(id) {
+    if (cart[id] == undefined) {
+        cart[id] = 1
+    }
+    else cart[id] = cart[id] + 1
+    loadAllBooks()
 }
 
 function loadBook(id) {
@@ -116,6 +152,16 @@ function addNewBook() {
     })
 }
 
+function order() {
+    $.ajax({
+        url: 'http://localhost:9000/book/order-books/',
+        type: 'POST',
+        contentType: "application/json",
+        data: JSON.stringify(cart),
+        success: getCost()
+    });
+}
+
 function editBook() {
     var x = $('#editBookForm')
     var id = x[0][0].value
@@ -138,7 +184,7 @@ function editBook() {
         success: function (data) {
             if (data && !data.ok) {
                 var error = "<div class='alert alert-danger'> " +
-                    "<strong>" + data.data +"</strong>" +
+                    "<strong>" + data.data + "</strong>" +
                     " </div>"
                 $('#bookError').html(error)
                 return
