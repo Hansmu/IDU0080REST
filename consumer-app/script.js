@@ -14,7 +14,7 @@ function getCost2() {
         dataType: 'json',
         success: function (data) {
             data = data.data.totalPrice;
-            $("#totalCost").html('<div id="TotalCost">' + data + '</div>')
+            $("#totalCost").html('<h1 id="TotalCost">Total cost:\t' + data + '</h1>')
         },
         error: function (data) {
             var error = "<div class='alert alert-danger'> " +
